@@ -43,7 +43,7 @@ void setup()
       input[count++] = myFile.read(); 
     }
     Serial.print(input); 
-    for (int i=5; i < 201; i++){
+    for (int i=5; i < 201; i++){  // The following for loop & embedded ifs extract the user connection data like SSID pass etc
       if (input[i] == '='){
         initial = i+1;
         counter++;
@@ -80,7 +80,7 @@ void setup()
         //set = 0;
       }
     }
-    Serial.println("IP: ");
+    Serial.println("IP: "); // debug statements to look for valid data parsed or not.....
     Serial.println(ip_add);
     Serial.println("DNS: ");
     Serial.println(dns);
@@ -95,26 +95,26 @@ void setup()
     port_string = port;
     ssid_string = ssid;
     pass_string = pass;
-    Serial.print("$$$");
+    Serial.print("$$$"); // putting rn-vx 171 wifly in settings mode
     delay(500);
-    Serial.print("set ip address " + ip_string);
+    Serial.print("set ip address " + ip_string); //concetaenating set AT command with IP picked from the SD card 
     Serial.print("\r");
     delay(200);
-    Serial.print("set ip nm " + dns_string);
+    Serial.print("set ip nm " + dns_string);    // concetaenating set AT command with DNS picked from the SD card
     Serial.print("\r");
     delay(200);
-    Serial.print("set ip localport " + port_string);
+    Serial.print("set ip localport " + port_string); //concetaenating set AT command with Port picked from the SD card
     Serial.print("\r");
     delay(200);
-    Serial.print("set wlan ssid " + ssid_string);
+    Serial.print("set wlan ssid " + ssid_string); //concetaenating set AT command with SSID picked from the SD card
     Serial.print("\r");
     delay(500);
-    Serial.print("set wlan phrase " + pass_string);
+    Serial.print("set wlan phrase " + pass_string);//concetaenating set AT command with PASS picked from the SD card
     Serial.print("\r");
     delay(500);
-    Serial.print("save\r");
+    Serial.print("save\r"); // save the settings in rn-xv171
     delay(500);
-    Serial.print("exit\r");
+    Serial.print("exit\r"); // exit the settings mode
     delay(200);
     // close the file:
     myFile.close();
@@ -124,7 +124,7 @@ void setup()
     Serial.println("error opening settings.txt");
   }
   Serial.print("exit\r");
-  for (int i=4; i < 8; i++){
+  for (int i=4; i < 8; i++){ // Roll out all the GPIOs connected to respected Relay inputs LOW
     pinMode(i, OUTPUT);
     digitalWrite(i, LOW);
   }  
@@ -156,12 +156,15 @@ void loop() {
   if (ended) 
   {
     ended = false;
-    Data = inData;//values of acclerometer like "545X" etc enter and stored in Data
+    Data = inData;//values of data packets enter and stored in Data
     clearing();
     process();
   }
 }
 
+/*
+The following function decripts the packets and converts it into messages......
+*/
 void process() {
   Data = Data.replace('<', ' ');
   Data = Data.replace('>', ' ');
@@ -202,7 +205,7 @@ void process() {
   }
 }
 
-
+// Just to Nullify each element in the Array meant to receive data
 void clearing() {
   //Serial.print("Clearing ALL");
   for(int i=0;i<21;i++)
