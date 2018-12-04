@@ -43,7 +43,7 @@ void setup()
       input[count++] = myFile.read(); 
     }
     Serial.print(input); 
-    for (int i=5; i < 201; i++){  // The following for loop & embedded ifs extract the user connection data like SSID pass etc
+    for (int i=5; i < 201; i++){  // The following for loop & embedded ifs extract the user connection data like SSID pass etc from text file
       if (input[i] == '='){
         initial = i+1;
         counter++;
